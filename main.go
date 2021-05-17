@@ -89,7 +89,7 @@ func main() {
 	//	time.Now(),
 	//	"",
 	//	false}
-	// create a record fpr work order table
+	// create a record for work order table
 	//db.Create(&workOrder)
 
 	//var user = &UserTest{
