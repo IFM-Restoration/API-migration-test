@@ -60,7 +60,8 @@ func main() {
 
 	// open DB
 	log.Print("Connecting to Postgres...")
-	connStr := "user=amayer password=ifmrestoration dbname=api_migration_test host=localhost sslmode=disable"
+	//connStr := "user=amayer password=ifmrestoration dbname=api_migration_test2 host=localhost sslmode=disable"
+	connStr := "user=postgres password=950496 dbname=api_migration_test host=localhost port=5433 sslmode=disable"
 	db, err := gorm.Open("postgres", connStr)
 	if err != nil {
 		panic(err.Error())
