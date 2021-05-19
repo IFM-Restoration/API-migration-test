@@ -3,6 +3,9 @@ package main
 import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
+	"gorm.io/gorm/logger"
+	"gorm.io/gorm/schema"
+	C "ifm.com/b1/models"
 	"log"
 	"time"
 
@@ -11,62 +14,31 @@ import (
 	_ "github.com/golang-migrate/migrate/source/file"
 )
 
-type WORK_ORDERS struct {
-	ID                            uint
-	ClientId                      uint
-	ResidentId                    uint
-	WorkOrderAcceptanceStatusId   uint
-	Client_contact_approved_by_id uint
-	Name                          string
-	Uuid                          string
-	Due_date                      time.Time
-	Is_canceled                   bool
-	Created_datetime              time.Time
-	Created_by                    string
-	Last_modified_datetime        time.Time
-	Last_modified_by              string
-	Is_deleted                    bool
-}
-
-type UserTest struct {
-	gorm.Model
-	FirstName string
-	LastName  string
-	Skills    []Skill
-}
-
-type Skill struct {
-	gorm.Model
-	SkillType string
-	Level     string
-	// pointer to UserTest struct, one-to-one, one-to-many relationships
-	UserTestID uint
+type Config struct {
+	SkipDefaultTransaction                   bool
+	NamingStrategy                           schema.Namer
+	Logger                                   logger.Interface
+	NowFunc                                  func() time.Time
+	DryRun                                   bool
+	PrepareStmt                              bool
+	DisableNestedTransaction                 bool
+	AllowGlobalUpdate                        bool
+	DisableAutomaticPing                     bool
+	DisableForeignKeyConstraintWhenMigrating bool
 }
 
 func main() {
 
-	// Migration with Migrate package
-
-	//   -mysql.dsn "amayer:ifmrestoration@tcp(localhost:5432)/api_migration_test?sslmode=disable"
-	//m, err := migrate.New(
-	//	"file://C://Users/amayer/GolandProjects/API-migration/db/migration",
-	//	"postgres://amayer:ifmrestoration@localhost:5432/api_migration_test?sslmode=disable")
-	//if err != nil {
-	//	log.Fatal(err)
-	//}
-	//if err := m.Down(); err != nil {
-	//	log.Fatal(err)
-	//}
-
 	// open DB
 	log.Print("Connecting to Postgres...")
 	//connStr := "user=amayer password=ifmrestoration dbname=api_migration_test2 host=localhost sslmode=disable"
-	connStr := "user=postgres password=950496 dbname=api_migration_test host=localhost port=5433 sslmode=disable"
-	db, err := gorm.Open("postgres", connStr)
+	connStr := "user=Tester password=Tester123! dbname=postgres host=34.68.197.254 port=5432 sslmode=disable"
+	db, err := gorm.Open("postgres", connStr, &Config{NamingStrategy: schema.NamingStrategy{SingularTable: true, NoLowerCase: true}})
 	if err != nil {
 		panic(err.Error())
 	}
 	defer db.Close()
+	db.LogMode(true)
 
 	database := db.DB()
 	err = database.Ping()
@@ -98,9 +70,68 @@ func main() {
 	//	LastName: "Mayer",
 	//}
 
-	db.DropTableIfExists(&UserTest{}, &Skill{})
+	db.DropTableIfExists(&C.Client{})
+
 	// create a table
-	db.CreateTable(&UserTest{}, &Skill{})
+	db.CreateTable(
+		&C.Client{})
+	//&C.Market{},
+	//&MajorTrade{},
+	//&InteriorExterior{},
+	//&Priority{},
+	//&WorkOrderAcceptanceStatus{},
+	//&ExceptionReasonCode{},
+	//&JobNeedType{},
+	//&JobNoteType{},
+	//&JobRescheduleReason{},
+	//&JobScheduleActivityStatus{},
+	//&TraitType{},
+	//&State{},
+	//&StateExitReason{},
+	//&DelayReason{},
+	//&AttachmentType{},
+	//&AttachmentCategory{},
+	//&AttachmentExtension{},
+	//&NeedsRevisionReason{},
+	//&ServiceCategory{},
+	//&CustomerStatus{},
+	//&LaborType{},
+	//&Material{},
+	//&Unit{},
+	//&QbAccess{},
+	//&Permissions{},
+	//&Roles{},
+	//&Users{},
+	//&WorkOrder{},
+	//&Resident{},
+	//&RolePermission{},
+	//&UserClientRole{},
+	//&ClientContact{},
+	//&Trait{},
+	//&ClientGeography{},
+	//&WorkOrderDetail{},
+	//&WorkOrderState{},
+	//&WorkOrderLocation{},
+	//&Estimate{},
+	//&Job{},
+	//&Customer{},
+	//&CustomerTrait{},
+	//&ServiceDetail{},
+	//&WorkOrderMajorTrade{},
+	//&StateWorkOrderHistory{},
+	//&ExceptionTransaction{},
+	//&EstimateNeedsRevisionReason{},
+	//&LineItem{},
+	//&Pclsm{},
+	//&JobNeed{},
+	//&JobState{},
+	//&JobTrait{},
+	//&Invoice{},
+	//&ResidentContactAttempt{},
+	//&JobNote{},
+	//&StateJobHistory{},
+	//&ResidentContactInformation{},
+	//&JobScheduleActivity{}
 
 	//add data to table
 	//db.Create(&user)

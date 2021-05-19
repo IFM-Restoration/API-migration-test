@@ -1,10 +1,8 @@
-package main
+package models
+
+import "time"
 
 // purple tables without foreign key
-
-import (
-	"time"
-)
 
 type Client struct {
 	ID              uint

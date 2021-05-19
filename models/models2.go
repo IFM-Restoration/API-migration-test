@@ -1,8 +1,6 @@
-package main
+package models
 
-import (
-	"time"
-)
+import "time"
 
 // blue tables with at least one foreign key
 type WorkOrder struct {

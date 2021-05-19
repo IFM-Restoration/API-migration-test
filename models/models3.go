@@ -1,8 +1,6 @@
-package main
+package models
 
-import (
-	"time"
-)
+import "time"
 
 // green tables with second level dependencies
 type WorkOrderDetail struct {

@@ -1,4 +1,4 @@
-package main
+package models
 
 import "time"
 
@@ -130,6 +130,18 @@ type ResidentContactAttempt struct {
 	JobId           []Job
 	ResidentId      []Resident
 	AttemptDate     time.Time
+	CreatedDatetime time.Time
+	CreatedBy       string
+	LastModifiedBy  string
+	IsDeleted       bool
+}
+
+type ResidentContactInformation struct {
+	ID              uint
+	ResidentId      []Resident
+	Phone           uint
+	AltPhone        uint
+	Email           string
 	CreatedDatetime time.Time
 	CreatedBy       string
 	LastModifiedBy  string
